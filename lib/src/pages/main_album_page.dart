@@ -27,22 +27,36 @@ class _MainAlbumPageState extends State<MainAlbumPage> {
       ),
       body: DefaultTabController(
         length: 2,
-        child: Scaffold(
-          backgroundColor: main_color,
-          appBar: TabBar(
-            labelColor: sec_color,
-            unselectedLabelColor: disable_color,
-            tabs: <Widget>[
-              Tab(icon: Icon(Icons.list)),
-              Tab(icon: Icon(Icons.star))
-            ],
-          ),
-          body: TabBarView(
-            children: <Widget>[
-              AllAlbumPage(),
-              FollowAlbumPage()
-            ],
-          ),
+        child: Consumer<AlbumProvider>(
+          builder: (context, component, child){
+            return Scaffold(
+              backgroundColor: main_color,
+              appBar: TabBar(
+                labelColor: sec_color,
+                unselectedLabelColor: disable_color,
+                tabs: <Widget>[
+                  Tab(icon: Icon(Icons.list)),
+                  Tab(
+                    child: Container(
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: <Widget>[
+                          Icon(Icons.star),
+                          Text('( ${component.followAlbums.length} )')
+                        ],
+                      ),
+                    ),
+                  )
+                ],
+              ),
+              body: TabBarView(
+                children: <Widget>[
+                  AllAlbumPage(),
+                  FollowAlbumPage()
+                ],
+              ),
+            );
+          },
         ),
       ),
     );
